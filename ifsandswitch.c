@@ -7,8 +7,11 @@ int main(){
     printf("Enter your age: ");
     scanf("%d", &age);
 
-    if(age >= 18){
-        printf("Congrats, you can suffer alone.");
+    if(age >= 18, age < 80){
+        printf("congrats, you can suffer alone.");
+    }
+    else if(age >= 80){
+        printf("better write your will");
     }
     else if(age < 0){
         printf("dumbass");
