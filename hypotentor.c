@@ -17,7 +17,8 @@ int main(){
 
     hypotenuse = sqrt(pow(height, 2) + pow(base, 2));
 
-    printf("\nThe hypotenuse is: %lf", hypotenuse);
+    printf("\nThe hypotenuse is: %lf\n", hypotenuse);
 
+    system("pause");
     return 0;
 }
