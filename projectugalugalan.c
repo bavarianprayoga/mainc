@@ -1,33 +1,31 @@
 #include <stdio.h>
-#include <math.h>
-#include <stdlib.h>
+#include <ctype.h>
 
 int main(){
 
-    double T; //temperature
-    char type; //temperature type (C, F)
-    double convt; //converted temperature
-    
-    printf("THE TEMPERATER");
-    printf("\nEnter the temperature: ");
-    scanf("%lf", &T);
-    getchar();
+    char unit;
+    float temp;
 
-    printf("\nIs the temperature in C? (y/n) ");
-    scanf("%c", &type);
+    printf("Is the temperature in (F) or (C)? ");
+    scanf("%c", &unit);
 
-    if(type == 'y' || type == 'Y'){
-        convt = (9 / 5 * T) + 32;
-        printf("The temperature is %.2lfF\n\n", convt);
+    unit = toupper(unit);
+
+    if(unit == 'C'){
+        printf("Enter the temperature in Celcius: ");
+        scanf("%f", &temp);
+        temp = (temp * 9 / 5) + 32;
+        printf("The temperature in Fahrenheit is %.1f", temp);
     }
-    else if(type == 'n' || type == 'N'){
-        convt = (T - 32) * 5 / 9;
-        printf("The temperature is %.2lfC\n\n", convt);
+    else if(unit == 'F'){
+        printf("Enter the temperature in Fahrenheit: ");
+        scanf("%f", &temp);
+        temp = ((temp - 32) * 5) / 9;
+        printf("The temperature in Celcius is %.1f", temp);
     }
     else{
-        printf("yang bener lah su\n\n");
+        printf("yang bener lah su");
     }
-
-    system("pause");
+    
     return 0;
 }
