@@ -2,15 +2,23 @@
 
 int main(){
 
-    long long int num;
+    int n;
 
-    scanf("%lld", &num);
+    scanf("%d", &n);
 
-    if(num % 2 == 0){
-        puts("even");
+    int a[n];
+
+    for(int i = 0; i < n; i++){
+        scanf("%d", &a[i]);
     }
-    else{
-        puts("odd");
+
+    int b[n];
+    for(int i = 0; i < n; i++){
+        scanf("%d", &b[a[i]]);
+    }
+
+    for(int i = 0; i < n; i++){
+        printf("%d ", &b[a[i]]);
     }
 
     return 0;
