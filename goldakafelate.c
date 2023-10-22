@@ -1,20 +1,41 @@
 #include <stdio.h>
-#include <ctype.h>
 
-int main(){  
+int main() {
+    char text[1000];
+    char vowels[] = "aeiou";
+    char consonants[] = "bcdfghjklmnpqrstvwxyz";
 
-    char vow;
+    scanf(" %[^\n]", text);  // Notice the space before %[^\n] to consume any leading whitespace.
 
-    scanf("%c", &vow);
+    int distinctVowels = 0;
+    int distinctConsonants = 0;
 
-    vow = toupper(vow);
+    // Arrays to keep track of seen vowels and consonants
+    int isVowel[26] = {0};
+    int isConsonant[26] = {0};
 
-    if(vow == 'A' || vow == 'I' || vow == 'U' || vow == 'E' || vow == 'O'){
-        printf("%c is a vowel\n", vow);
+    // Iterate through the input text and process each character
+    for (int i = 0; text[i] != '\0'; i++) {
+        char ch = tolower(text[i]);  // Convert to lowercase for case insensitivity
+
+        if (ch >= 'a' && ch <= 'z') {
+            if (strchr(vowels, ch) != NULL) {
+                if (!isVowel[ch - 'a']) {
+                    isVowel[ch - 'a'] = 1;
+                    distinctVowels++;
+                }
+            } else if (strchr(consonants, ch) != NULL) {
+                if (!isConsonant[ch - 'a']) {
+                    isConsonant[ch - 'a'] = 1;
+                    distinctConsonants++;
+                }
+            }
+        }
     }
-    else{
-        printf("%c is not a vowel\n", vow);
-    }
+
+    // Print the results
+    printf("Vocal: %d\n", distinctVowels);
+    printf("Consonant: %d\n", distinctConsonants);
 
     return 0;
 }

@@ -2,33 +2,25 @@
 
 int main(){
 
-    int n, fren, a, b;
+    int n;
 
     scanf("%d", &n);
 
-    int vid[n];
+    int num[n];
+    int srt[n];
 
     for(int i = 0; i < n; i++){
-        scanf("%d", &vid[i]);
+        scanf("%d", &srt[i]);   
     }
 
-    scanf("%d", &fren);
-    getchar();
-    
-    int sum[fren];
-
-    for(int i = 0; i < fren; i++){
-        scanf("%d %d", &a, &b);
-        getchar();
-        for(int j = a - 1; j < b; j++){
-            sum[i] += vid[j];
-        }
+    for(int i = 0; i < n; i++){
+        scanf("%d", &num[srt[i]]);
     }
 
-    for(int i = 0; i < fren; i++){
-        printf("Case #%d: %d\n", i+1, sum[i]);
+    for(int i = 0; i < n - 1; i++){
+        printf("%d ", num[i]);
     }
-    
+    printf("%d\n", num[n - 1]);
 
     return 0;
 }
