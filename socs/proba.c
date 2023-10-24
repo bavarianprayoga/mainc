@@ -1,26 +1,41 @@
 #include <stdio.h>
+#include <string.h>
+
+void revv(char s[], int j, int k){
+    if (j >= k) return;
+    
+    char temp = s[j];
+    s[j] = s[k];
+    s[k] = temp;
+
+    revv(s, j+1, k-1);
+}
+
+void print(char s[][1000], int t){
+    for(int i = 0; i < t; i++){
+        int j = 0;
+        int k = strlen(s[i]) - 1;
+
+        revv(s[i], j, k);
+        printf("Case #%d: %s\n", i+1, s[i]); 
+    }
+}
 
 int main(){
 
-    int n;
+    int t;
 
-    scanf("%d", &n);
+    scanf("%d", &t);
+    getchar();
+    
+    char s[t][1000];
 
-    int num[n];
-    int srt[n];
-
-    for(int i = 0; i < n; i++){
-        scanf("%d", &srt[i]);   
+    for(int i = 0; i < t; i++){
+        scanf("%[^\n]", s[i]);
+        getchar();
     }
 
-    for(int i = 0; i < n; i++){
-        scanf("%d", &num[srt[i]]);
-    }
-
-    for(int i = 0; i < n - 1; i++){
-        printf("%d ", num[i]);
-    }
-    printf("%d\n", num[n - 1]);
+    print(s, t);
 
     return 0;
 }
