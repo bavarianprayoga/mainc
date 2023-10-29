@@ -1,30 +1,48 @@
 #include <stdio.h>
 
-int main(){
+int main() {
+	
+    int t, n, k;
+    scanf("%d", &t);
 
-    int quantity, changes, no, new;
+    for (int i = 0; i < t; i++) {
+        scanf("%d %d", &n, &k);
+        
+        char stairs[n];
+        scanf("%s", stairs);
 
-    scanf("%d", &quantity);
+        int first = 0, last = 0, count = 0;
 
-    int items[quantity];
-
-    for(int i = 0; i < quantity; i++){
-        scanf("%d", &items[i]);
-    }
-
-    scanf("%d", &changes);
-
-    for(int i = 0; i < changes; i++){
-        scanf("%d %d", &no, &new);
-        items[no-1] = new; 
-        printf("Case #%d: ", i+1);
-
-        for(int j = 0; j < quantity; j++){
-        printf("%d ", items[j]);
+        for (int j = 0; j < n; j++) {
+            if (stairs[j] == '1') {
+                first = j + 1;
+                break;
+            }
         }
-        puts("");
+        
+        for (int j = n - 1; j >= 0; j--) {
+            if (stairs[j] == '1') {
+                last = j;
+                break;
+            }
+        }
+        
+        for (int j = 0; j < n; j++) {
+            if (stairs[j] == '1') {
+                count++;
+            }
+        }
+        
+        if ((count == 0 || count == 1) && (n <= k) || ((first <= k) && (n - last) <= k) && count != 0 && count != 1) {
+            printf("Case #%d: Alive\n", i + 1);
+        } 
+        else {
+            printf("Case #%d: Dead\n", i + 1);
+        }
     }
-
-
+    
     return 0;
 }
+
+
+

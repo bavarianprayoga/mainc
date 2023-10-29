@@ -1,38 +1,40 @@
 #include <stdio.h>
 
+int check(int n, char stairs[], int k){
+    int count = 0;
+    for(int i = 0; i < n; i++){
+        if(stairs[i] == '0'){
+            count++;
+            if (count == k) return 0;
+        } 
+        else{
+            count = 0;
+        }
+    }
+    return 1;
+}
+
 int main(){
 
     int t;
     scanf("%d", &t);
 
+    int results[t];
+
     for(int i = 0; i < t; i++){
-        int n;
-        scanf("%d", &n);
+        int n, k;
+        scanf("%d %d", &n, &k);
 
-        int table[n][n];
-        int sum[n];
+        char stairs[n+1];
+        scanf("%s", stairs);
 
-        for(int j = 0; j < n; j++){
-            for(int k = 0; k < n; k++){
-                scanf("%d", &table[j][k]);
-            }
-        }
-
-        for(int l = 0; l < n; l++){
-            sum[l] = 0;
-            for(int m = 0; m < n; m++){
-                sum[l] += table[m][l];
-            } 
-        }
-
-        printf("Case #%d: ", i+1);
-        for(int o = 0; o < n - 1; o++){
-            printf("%d ", sum[o]);
-        }
-        printf("%d\n", sum[n - 1]);
+        int fate = check(n, stairs, k);
+        results[i] = fate;
     }
 
-
+    for (int i = 0; i < t; i++){
+        printf("Case #%d: %s\n", i + 1, (results[i] == 1) ? "Alive" : "Dead");
+    }
 
     return 0;
 }

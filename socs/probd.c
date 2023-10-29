@@ -1,33 +1,66 @@
 #include <stdio.h>
+#include <math.h>
+
+int square(int num){
+    int root = (int)sqrt(num);
+    return root * root == num;
+}
+
+int cubic(int num){
+    int cube = (int)cbrt(num);
+    return cube * cube * cube == num;
+}
+
+int prime(int num){
+    if(num <= 1) return 0;
+    for(int i = 2; i <= sqrt(num); i++){
+        if(num % i == 0){
+            return 0;
+        }
+    }
+    return 1;
+}
 
 int main(){
 
-    int quantity, changes;
+    int cases;
+    scanf("%d", &cases);
+    getchar();
 
-    scanf("%d", &quantity);
+    for(int i = 0; i < cases; i++){
+        int num;
+        scanf("%d", &num);
+        getchar();
 
-    long long int items[quantity];
+        int isPrime = prime(num);
+        int isSquare = square(num);
+        int isCubic = cubic(num);
 
-    for(int i = 0; i < quantity; i++){
-        scanf("%lld", &items[i]);
-    }
+        printf("Case #%d : ", i+1);
 
-    scanf("%d", &changes);
-
-    long long int cases[changes][2];
-
-    for(int i = 0; i < changes; i++){
-        scanf("%lld %lld", &cases[i][0], &cases[i][1]);
-    }
-
-    for(int i = 0; i < changes; i++){
-        items[cases[i][0]-1] = cases[i][1]; 
-        printf("Case #%d: ", i+1);
-
-        for(int j = 0; j < quantity-1; j++){
-            printf("%lld ", items[j]);
+        if(isPrime){
+            printf("prime");
+            if (isSquare || isCubic){
+                printf(" ");
+            }
         }
-        printf("%lld\n", items[quantity-1]);
+
+        if(isSquare == 1){
+            printf("square");
+            if (isCubic){
+                printf(" ");
+            }
+        }
+
+        if(isCubic == 1){
+            printf("cubic");
+        }
+
+        if(!isPrime && !isSquare && !isCubic){
+            printf("none");
+        }
+
+        printf("\n");
     }
 
     return 0;
