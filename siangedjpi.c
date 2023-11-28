@@ -1,48 +1,37 @@
 #include <stdio.h>
 
-int main() {
-	
-    int t, n, k;
-    scanf("%d", &t);
+int main(){
 
-    for (int i = 0; i < t; i++) {
-        scanf("%d %d", &n, &k);
-        
-        char stairs[n];
-        scanf("%s", stairs);
+    int n;
+    scanf("%d", &n);
+    getchar();
 
-        int first = 0, last = 0, count = 0;
+    char sky[n][n];
 
-        for (int j = 0; j < n; j++) {
-            if (stairs[j] == '1') {
-                first = j + 1;
-                break;
-            }
-        }
-        
-        for (int j = n - 1; j >= 0; j--) {
-            if (stairs[j] == '1') {
-                last = j;
-                break;
-            }
-        }
-        
-        for (int j = 0; j < n; j++) {
-            if (stairs[j] == '1') {
-                count++;
-            }
-        }
-        
-        if ((count == 0 || count == 1) && (n <= k) || ((first <= k) && (n - last) <= k) && count != 0 && count != 1) {
-            printf("Case #%d: Alive\n", i + 1);
-        } 
-        else {
-            printf("Case #%d: Dead\n", i + 1);
+    for(int i = 0; i < n; i++){
+        scanf("%s", &sky[i]);
+        getchar();
+    }
+
+    for(int i = 0; i < n / 2; i++){
+        for(int j = 0; j < n; j++){
+            char temp = sky[i][j];
+            sky[i][j] = sky[n - i - 1][j];
+            sky[n - i - 1][j] = temp;
         }
     }
-    
+
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n / 2; j++){
+            char temp = sky[i][j];
+            sky[i][j] = sky[i][n - j - 1];
+            sky[i][n - j - 1] = temp;
+        }
+    }
+
+    for(int i = 0; i < n; i++){
+        printf("%s\n", sky[i]);
+    }
+
     return 0;
 }
-
-
-

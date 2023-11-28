@@ -1,43 +1,30 @@
 #include <stdio.h>
-#include <ctype.h>
-#include <string.h>
 
-int main() {
-    char text[1000];
-    char vowels[] = "aeiou";
-    char consonants[] = "bcdfghjklmnpqrstvwxyz";
+typedef struct{
+    char id[12];
+    char nama[100];
+    double gpa;
+    int algo;
+} Student;
 
-    scanf(" %[^\n]", text);  // Notice the space before %[^\n] to consume any leading whitespace.
+int main(){
 
-    int distinctVowels = 0;
-    int distinctConsonants = 0;
+    Student murid[3];
 
-    // Arrays to keep track of seen vowels and consonants
-    int isVowel[26] = {0};
-    int isConsonant[26] = {0};
-
-    // Iterate through the input text and process each character
-    for (int i = 0; text[i] != '\0'; i++) {
-        char ch = tolower(text[i]);  // Convert to lowercase for case insensitivity
-
-        if (ch >= 'a' && ch <= 'z') {
-            if (strchr(vowels, ch) != NULL) {
-                if (!isVowel[ch - 'a']) {
-                    isVowel[ch - 'a'] = 1;
-                    distinctVowels++;
-                }
-            } else if (strchr(consonants, ch) != NULL) {
-                if (!isConsonant[ch - 'a']) {
-                    isConsonant[ch - 'a'] = 1;
-                    distinctConsonants++;
-                }
-            }
-        }
+    for(int i = 0; i < 3; i++){
+        scanf("%s", &murid[i].id);
+        getchar();
+        scanf("%[^\n]", &murid[i].nama);
+        getchar();
+        scanf("%lf", &murid[i].gpa);
+        getchar();
+        scanf("%d", &murid[i].algo);
+        getchar();
     }
 
-    // Print the results
-    printf("Vocal: %d\n", distinctVowels);
-    printf("Consonant: %d\n", distinctConsonants);
+    for(int i = 0; i < 3; i++){
+        printf("Student %d: %s, %s, %.1lf, %d\n", i + 1, murid[i].id, murid[i].nama, murid[i].gpa, murid[i].algo);
+    }
 
     return 0;
 }

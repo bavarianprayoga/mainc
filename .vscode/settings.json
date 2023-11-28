@@ -56,5 +56,8 @@
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": false,
+  "[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+  }
 }

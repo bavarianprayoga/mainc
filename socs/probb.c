@@ -1,47 +1,41 @@
 #include <stdio.h>
 
-int same(int num[100][100], int n){
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < n; j++){
-            
-            for(int k = j + 1; k < n; k++){
-                if(num[i][j] == num[i][k]) return 1; 
-            }
-        }
-    }
-
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            
-            for(int k = j + 1; k < n; k++){
-                if(num[j][i] == num[k][i]) return 1;
-            }
-        }
-    }
-    return 0;
-}
-
 int main(){
 
+    int t;
     int n;
-    scanf("%d", &n);
 
-    int num[100][100];
-    
-    for (int i = 0; i < n; i++){
-        for(int j = 0; j < n; j++){
-            scanf("%d", &num[i][j]);
+    scanf("%d", &t);
+
+    for(int i = 0; i < t; i++){
+        scanf("%d", &n);
+
+        long long int table[n][n];
+        long long int total[n];
+
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                scanf("%lld", &table[i][j]);
+            }
         }
-    }
-    
-    int ssame = same(num, n);
 
-    if(ssame == 0){
-        printf("Yay\n");
+        for(int j = 0; j < n; j++){
+            total[j] = 0;
+        }
+
+        for(int j = 0; j < n; j++){
+            for(int i = 0; i < n; i++){
+                total[j] += table[i][j];
+            }
+        }
+
+        printf("Case #%d:", i+1);
+        for(int i = 0; i < n; i++){
+            printf(" %lld", total[i]);
+        }
+        printf("\n");
+
     }
-    else{
-        printf("Nay\n");
-    }   
 
     return 0;
 }

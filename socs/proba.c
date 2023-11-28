@@ -1,41 +1,46 @@
 #include <stdio.h>
 #include <string.h>
 
-void revv(char s[], int j, int k){
-    if (j >= k) return;
-    
-    char temp = s[j];
-    s[j] = s[k];
-    s[k] = temp;
-
-    revv(s, j+1, k-1);
-}
-
-void print(char s[][1000], int t){
-    for(int i = 0; i < t; i++){
-        int j = 0;
-        int k = strlen(s[i]) - 1;
-
-        revv(s[i], j, k);
-        printf("Case #%d: %s\n", i+1, s[i]); 
-    }
-}
-
 int main(){
 
     int t;
+    char name[100000];
+    char alpha[] = "abcdefghijklmnopqrstuvwxyz";
 
     scanf("%d", &t);
-    getchar();
     
-    char s[t][1000];
+    int final[t];
 
     for(int i = 0; i < t; i++){
-        scanf("%[^\n]", s[i]);
-        getchar();
+        scanf(" %[^\n]", name);
+
+        int alphaCount = 0;
+        int isAlpha[26] = {0};
+
+        for (int i = 0; name[i] != '\0'; i++){
+            char ch = name[i];
+            if (ch >= 'a' && ch <= 'z'){
+                if (strchr(name, ch) != NULL){
+                    if (!isAlpha[ch - 'a']) {
+                        isAlpha[ch - 'a'] = 1;
+                        alphaCount++;
+                    }
+                }
+            }
+        }
+
+        final[i] = alphaCount;
+
     }
 
-    print(s, t);
+    for(int i = 0; i < t; i++){
+        if(final[i] % 2 == 0){
+            printf("Case #%d: Yay\n", i+1);
+        }
+        else{
+            printf("Case #%d: Ewwww\n", i+1);
+        }
+    }
 
     return 0;
 }

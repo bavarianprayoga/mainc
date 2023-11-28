@@ -1,66 +1,36 @@
 #include <stdio.h>
-#include <math.h>
-
-int square(int num){
-    int root = (int)sqrt(num);
-    return root * root == num;
-}
-
-int cubic(int num){
-    int cube = (int)cbrt(num);
-    return cube * cube * cube == num;
-}
-
-int prime(int num){
-    if(num <= 1) return 0;
-    for(int i = 2; i <= sqrt(num); i++){
-        if(num % i == 0){
-            return 0;
-        }
-    }
-    return 1;
-}
 
 int main(){
 
-    int cases;
-    scanf("%d", &cases);
+    int n;
+    scanf("%d", &n);
     getchar();
 
-    for(int i = 0; i < cases; i++){
-        int num;
-        scanf("%d", &num);
+    char sky[n][100];
+
+    for(int i = 0; i < n; i++){
+        scanf("%s", &sky[i]);
         getchar();
-
-        int isPrime = prime(num);
-        int isSquare = square(num);
-        int isCubic = cubic(num);
-
-        printf("Case #%d : ", i+1);
-
-        if(isPrime){
-            printf("prime");
-            if (isSquare || isCubic){
-                printf(" ");
-            }
+    }
+    
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n / 2; j++){
+            char temp = sky[i][j];
+            sky[i][j] = sky[i][n - j - 1];
+            sky[i][n - j - 1] = temp;
         }
-
-        if(isSquare == 1){
-            printf("square");
-            if (isCubic){
-                printf(" ");
-            }
+    }
+    
+    for(int i = 0; i < n / 2; i++){
+        for(int j = 0; j < n; j++){
+            char temp = sky[i][j];
+            sky[i][j] = sky[n - i - 1][j];
+            sky[n - i - 1][j] = temp;
         }
-
-        if(isCubic == 1){
-            printf("cubic");
-        }
-
-        if(!isPrime && !isSquare && !isCubic){
-            printf("none");
-        }
-
-        printf("\n");
+    }
+    
+    for(int i = 0; i < n; i++){
+        printf("%s\n", sky[i]);
     }
 
     return 0;
