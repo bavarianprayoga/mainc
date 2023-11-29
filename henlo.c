@@ -1,42 +1,59 @@
 #include <stdio.h>
+#include <string.h>
 
-int main() {
+typedef struct{
+    char name[100];
+    int qty;
+    int price;
+} Data;
 
+int main(){
 
-    char name[50][100];
-    int age[50];
-    int idx = 0;
-    char filename[100];
+    FILE *file = fopen("input.txt", "r");
 
-    printf("Enter filename: ");
-    scanf("%s", filename);
-    getchar();
-
-    FILE *fp2 = fopen(filename, "r");
-    
-    while(fscanf(fp2, "%[^_]_%d\n", name[idx], &age[idx]) != EOF) {
-        idx++;
+    if(file == NULL){
+        printf("errrorrr\n");
+        return -1;
     }
-    
-    fclose(fp2);
 
-    for (int i = 0; i < idx; i++) {
-        printf("name: %s\nAge: %d\n\n", name[i], age[i]);
+    Data sembako[500] = {0};
+
+    int i = 0;
+
+    while(fscanf(file, "%[^#]#%d_%d\n", sembako[i].name, &sembako[i].qty, &sembako[i].price) != EOF){
+        i++;
+    }
+
+    fclose(file);
+
+    FILE *file2 = fopen("input.txt", "a");
+
+    do{
+        printf("Masukkan nama barang baru; [3-100 characters]:");
+        scanf("%[^\n]", sembako[i].name);
+        getchar();
+    } while(strlen(sembako[i].name) <= 3 || strlen(sembako[i].name) > 100);
+
+    do{
+        printf("Masukkan jumlah barang baru; [>= 1]:");
+        scanf("%d", &sembako[i].qty);
+        getchar();
+    } while(sembako[i].qty < 1);
+
+    do{
+        printf("Masukkan harga barang baru; [>= 100]:");
+        scanf("%d", &sembako[i].price);
+        getchar();
+    } while(sembako[i].price < 100);
+
+    fprintf(file2, "%s#%d_%d\n", sembako[i].name, sembako[i].qty, sembako[i].price);
+
+    fclose(file2);
+
+    printf("Nama          Qty   Harga\n");
+    for(int j = 0; j < i; j++){
+        printf("%-13s %-5d %d\n", sembako[j].name, sembako[j].qty, sembako[j].price);
     }
 
     return 0;
 }
-
-    // FILE *fp = fopen("gatau.txt", "w");
-
-    // fprintf(fp, "bavarian\n");
-    // fprintf(fp, "buda\n");
-    // fprintf(fp, "budi\n");
-    // fprintf(fp, "budu\n");
-    // fprintf(fp, "bude\n");
-    // fprintf(fp, "budo\n");
-
-    // fclose(fp);
-
-
-
