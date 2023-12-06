@@ -1,59 +1,44 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
+#include <time.h>
 
-typedef struct{
-    char name[100];
-    int qty;
-    int price;
-} Data;
+void bubbleSort(int array[], int size){
+    int swapped;
+    do{
+        swapped = 0;
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size - 1 - i; j++){ //dikurang i karena biar ga looping lagi element yg udah diurutin
+                if(array[j] > array[j + 1]){
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                    swapped = 1; //kalo gaada yang berubah urutannya swapped ttp 0, jadi gausah lanjutin looping
+                }
+            }
+        }
+    } while(swapped == 1);
+}
+
+
 
 int main(){
 
-    FILE *file = fopen("input.txt", "r");
+    srand(time(0)); // Seed the random number generator with the current time
 
-    if(file == NULL){
-        printf("errrorrr\n");
-        return -1;
+    int array[10000]; // Change this to the size you want
+    int size = sizeof(array)/sizeof(array[0]);
+
+    // Fill the array with random numbers
+    for(int i = 0; i < size; i++){
+        array[i] = rand() % 10000; // Generate a random number between 0 and 99
     }
+    
+    bubbleSort(array, size);
 
-    Data sembako[500] = {0};
-
-    int i = 0;
-
-    while(fscanf(file, "%[^#]#%d_%d\n", sembako[i].name, &sembako[i].qty, &sembako[i].price) != EOF){
-        i++;
+    for(int i = 0; i < size; i++){
+        printf("%d, ", array[i]);
     }
-
-    fclose(file);
-
-    FILE *file2 = fopen("input.txt", "a");
-
-    do{
-        printf("Masukkan nama barang baru; [3-100 characters]:");
-        scanf("%[^\n]", sembako[i].name);
-        getchar();
-    } while(strlen(sembako[i].name) <= 3 || strlen(sembako[i].name) > 100);
-
-    do{
-        printf("Masukkan jumlah barang baru; [>= 1]:");
-        scanf("%d", &sembako[i].qty);
-        getchar();
-    } while(sembako[i].qty < 1);
-
-    do{
-        printf("Masukkan harga barang baru; [>= 100]:");
-        scanf("%d", &sembako[i].price);
-        getchar();
-    } while(sembako[i].price < 100);
-
-    fprintf(file2, "%s#%d_%d\n", sembako[i].name, sembako[i].qty, sembako[i].price);
-
-    fclose(file2);
-
-    printf("Nama          Qty   Harga\n");
-    for(int j = 0; j < i; j++){
-        printf("%-13s %-5d %d\n", sembako[j].name, sembako[j].qty, sembako[j].price);
-    }
+    puts("");
 
     return 0;
 }

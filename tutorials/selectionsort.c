@@ -1,20 +1,20 @@
 #include <stdio.h>
 
 void selection(int array[], int size){
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < size - 1; i++){
         int max = 0;
         int j;
         for(int j = 0; j < size - i; j++){ //buat ngeloop utk nentuin size terbesar
             if(array[max] < array[j]){
-                max = array[j];
+                max = j; //buat nentuin index terbesar
             }
         }
 
-        //! MASIH ERRORRRRRRR
-
-        int temp = array[j - 1];
-        array[j - 1] = array[max];
-        array[max] = array[j - 1];
+        if(max != size - i - 1){
+            int temp = array[size - i - 1];
+            array[size - i - 1] = array[max];
+            array[max] = temp;
+        }
     }
 }
 

@@ -5,7 +5,7 @@ void insertion(int array[], int size){
         int temp = array[i];
         int j;
 
-        for(int j = i - 1; j >= 0; j--){
+        for(j = i - 1; j >= 0; j--){
             if(array[j] > temp){
                 array[j + 1] = array[j];
             }
@@ -13,7 +13,6 @@ void insertion(int array[], int size){
         }
         array[j + 1] = temp;
 
-        //! MASIH ERROR LETSGOOOOOO
     }
 }
 

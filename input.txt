@@ -1,15 +1,7 @@
-Pasta Gigi#20_15000
-Sabun Colek#15_10000
-Sikat Gigi#10_20000
-Detergent#25_50000
-Shampoo#30_30000
-Conditioner#35_40000
-Hand Soap#5_8000
-Body Wash#40_45000
-Lotion#50_55000
-Sunscreen#45_35000
-Pasta Gigi#20_15000
-Sabun Colek#15_10000
-Kutang#5_5000
-Kutang#4_5000
-Busi Fortuner#6_25000
+5
+Ayam Bakar
+Daging
+Ikan Biru
+Kerbau Hitam
+Zebra
+Zebra

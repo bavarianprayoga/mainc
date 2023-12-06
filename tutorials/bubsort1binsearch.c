@@ -37,7 +37,7 @@ int main(){
 
     int array[] = {7, 5, 6, 3, 9, 8, 1, 2, 0, 4, 8750};
     int size = sizeof(array)/sizeof(array[0]);
-    int target = 8750;
+    int target = 6;
     
     bubbleSort(array, size);
     int index = binarySearch(array, size, target, 0, size-1);
@@ -46,6 +46,7 @@ int main(){
     for(int i = 0; i < size; i++){
         printf("%d ", array[i]);
     }
+    puts("");
 
     printf("Index of target %d is %d\n", target, index);
 

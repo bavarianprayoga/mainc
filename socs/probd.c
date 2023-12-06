@@ -1,37 +1,40 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct{
+    char nim[11];
+    char name[21];
+} data;
+
+int comp(const void *a, const void *b){
+    data *x = (data *)a;
+    data *y = (data *)b;
+
+    return strcmp(x->nim, y->nim);
+}
 
 int main(){
 
-    int n;
-    scanf("%d", &n);
-    getchar();
+    data siswa[1000];
 
-    char sky[n][100];
+    FILE *file = fopen("testdata.in", "r");
 
-    for(int i = 0; i < n; i++){
-        scanf("%s", &sky[i]);
-        getchar();
+    int jumlah;
+    fscanf(file, "%d", &jumlah);
+
+    for(int i = 0; i < jumlah; i++){
+        fscanf(file, "%s %[^\n]\n", siswa[i].nim, siswa[i].name);
     }
-    
-    for(int i = 0; i < n; i++){
-        for(int j = 0; j < n / 2; j++){
-            char temp = sky[i][j];
-            sky[i][j] = sky[i][n - j - 1];
-            sky[i][n - j - 1] = temp;
-        }
-    }
-    
-    for(int i = 0; i < n / 2; i++){
-        for(int j = 0; j < n; j++){
-            char temp = sky[i][j];
-            sky[i][j] = sky[n - i - 1][j];
-            sky[n - i - 1][j] = temp;
-        }
-    }
-    
-    for(int i = 0; i < n; i++){
-        printf("%s\n", sky[i]);
+
+    fclose(file);
+
+    qsort(siswa, jumlah, sizeof(data), comp);
+
+    for(int i = 0; i < jumlah; i++){
+        printf("%s %s\n", siswa[i].nim, siswa[i].name);
     }
 
     return 0;
 }
+
