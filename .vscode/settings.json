@@ -59,5 +59,8 @@
   "editor.formatOnSave": false,
   "[c]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
+  },
+  "files.associations": {
+    "algorithm": "c"
   }
 }

@@ -1,42 +1,50 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(){
+int main() {
     
     FILE *file = fopen("testdata.in", "r");
+    
+    int t, n;
+    char str[10001];
 
-    int t;
-    fscanf(file, "%d\n", &t);
+    fscanf(file, "%d", &t);
 
     for(int i = 0; i < t; i++){
-        char str[100];
-        fscanf(file, "%s\n", str);
-
-        int pcs;
-        fscanf(file, "%d\n", &pcs);
+        fscanf(file, "%s\n", &str);
+        fscanf(file, "%d\n", &n);
         
-        char change[26][2];
-        int freq[26] = {0};
+        int len = strlen(str);
+        int mark[10001] = {0};
 
-        for(int j = 0; j < pcs; j++){
-            fscanf(file, "%c %c\n", &change[j][0], &change[j][1]);
+        for(int j = 0; j < n; j++){
+            char first, switched;
+            fscanf(file, "%c %c\n", &first, &switched);
+
+            if(mark[first] == 0){
+                mark[first] = 1;
+
+                for(int k = 0; k < len; k++){
+                    if(str[k] == first){
+                        str[k] = switched;
+                    }
+                }
+            }
         }
 
-        for(int j = 0; j < strlen(str); j++){
-            freq[str[j] - 'A']++;
+        int count[10000] = {0};
+        for(int j = 0; j < len; j++){
+            count[str[j]]++;
         }
 
-        for(int j = 0; j < pcs; j++){
-            freq[change[j][1] - 'A'] += freq[change[j][0] - 'A'];
-            freq[change[j][0] - 'A'] = 0;
+        for(int j = 'A'; j <= 'Z'; j++){
+            if(count[j] != 0){
+                printf("%c %d\n", j, count[j]);
+            }
         }
-
-        for(int j = pcs - 1; j >= 0; j--){
-            printf("%c %d\n", change[j][1], freq[change[j][1] - 'A']);
-        }
-
-
     }
 
+    fclose(file);
+    
     return 0;
 }

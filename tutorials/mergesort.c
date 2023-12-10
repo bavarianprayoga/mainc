@@ -1,38 +1,38 @@
 #include <stdio.h>
 
-void merge(int array[], int startL, int endL, int startR, int endR){
-    int temp[endR - startL + 1]; 
-    int l = startL;
-    int r = startR;
+void merge(int array[], int leftStart, int leftEnd, int rightStart, int RightEnd){
+    int temp[RightEnd - leftStart + 1]; 
+    int l = leftStart;
+    int r = rightStart;
     int idx = 0;
 
-    while(l <= endL && r <= endR){
+    while(l <= leftEnd && r <= RightEnd){
         if(array[l] < array[r]){
-            temp[l + r - startL - startR] = array[l];
+            temp[l + r - leftStart - rightStart] = array[l];
             l++;
             idx++;
         } 
         else{
-            temp[l + r - startL - startR] = array[r];
+            temp[l + r - leftStart - rightStart] = array[r];
             r++;
             idx++;
         }
     }
 
-    while(l <= endL){
+    while(l <= leftEnd){
         temp[idx] = array[l];
         l++;
         idx++;
     }
 
-    while(r <= endR){
+    while(r <= RightEnd){
         temp[idx] = array[r];
         r++;
         idx++;
     }
 
-    for(int i = startL; i <= endR; i++){
-        array[i] = temp[i - startL];
+    for(int i = leftStart; i <= RightEnd; i++){
+        array[i] = temp[i - leftStart];
     }
 }
 
