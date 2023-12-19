@@ -17,7 +17,7 @@ void bubbleSort(int array[], int size){
     } while(swapped == 1);
 }
 
-int binarySearch(int array[], int size, int target, int left, int right){
+int binarySearch(int array[], int size, int target, int left, int right){ //harus udah disort
     if(left > right) return -1; //kalo target gaada di array
 
     int mid = left + (right - left) / 2;
@@ -35,7 +35,7 @@ int binarySearch(int array[], int size, int target, int left, int right){
 
 int main(){
 
-    int array[] = {7, 5, 6, 3, 9, 8, 1, 2, 0, 4, 8750};
+    int array[] = {7, 5, 6, 3, 9, 8, 1, 2, 0, 4, 8750, 5 ,345, 345 , 234};
     int size = sizeof(array)/sizeof(array[0]);
     int target = 6;
     

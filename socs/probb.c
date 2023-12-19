@@ -1,50 +1,34 @@
 #include <stdio.h>
-#include <string.h>
 
-int main() {
-    
-    FILE *file = fopen("testdata.in", "r");
-    
+void sum(int num[], int n, int index, int curr){
+    if(index >= n) return; 
+
+    if(2 * index + 1 >= n && 2 * index + 2 >= n){
+        printf("%d\n", curr + num[index]);
+    } 
+    else{
+        sum(num, n, 2 * index + 1, curr + num[index]); 
+        sum(num, n, 2 * index + 2, curr + num[index]); 
+    }
+}
+
+int main(){
     int t, n;
-    char str[10001];
-
-    fscanf(file, "%d", &t);
+    scanf(" %d", &t);
 
     for(int i = 0; i < t; i++){
-        fscanf(file, "%s\n", &str);
-        fscanf(file, "%d\n", &n);
-        
-        int len = strlen(str);
-        int mark[10001] = {0};
+        scanf(" %d", &n);
+
+        int num[n];
 
         for(int j = 0; j < n; j++){
-            char first, switched;
-            fscanf(file, "%c %c\n", &first, &switched);
-
-            if(mark[first] == 0){
-                mark[first] = 1;
-
-                for(int k = 0; k < len; k++){
-                    if(str[k] == first){
-                        str[k] = switched;
-                    }
-                }
-            }
+            scanf(" %d", &num[j]);
         }
 
-        int count[10000] = {0};
-        for(int j = 0; j < len; j++){
-            count[str[j]]++;
-        }
-
-        for(int j = 'A'; j <= 'Z'; j++){
-            if(count[j] != 0){
-                printf("%c %d\n", j, count[j]);
-            }
-        }
+        printf("Case #%d:\n", i+1);
+        sum(num, n, 0, 0); 
     }
 
-    fclose(file);
-    
     return 0;
 }
+
