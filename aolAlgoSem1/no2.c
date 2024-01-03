@@ -25,7 +25,7 @@ void case1(Property properties[], int idx); //Taking care of case 1. Displaying 
 void case2(Property properties[], int idx); //Taking care of case 2. Searching data.
 void case3(Property properties[], int idx); //Taking care of case 3. Sorting data.
 void case4(Property properties[], int idx); //Taking care of case 4. Exporting data.
-int comp(const void* a, const void* b); //Comparing function for qsort inside case 3
+int comp(const void* a, const void* b); //Comparing function for qsort inside case3 function.
 
 int main(){
 
@@ -47,7 +47,7 @@ int main(){
         idx++;
     }
 
-    int choice, rows;
+    int choice;
 
     do{
         puts("=============================");
@@ -106,6 +106,8 @@ void case1(Property properties[], int idx){
     for(int i = 0; i < rows; i++){
         printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
     }
+
+    printf("\n\n");
 }
 
 void case2(Property properties[], int idx){ //Taking care of case 2. Searching data.
@@ -118,38 +120,14 @@ void case2(Property properties[], int idx){ //Taking care of case 2. Searching d
     scanf(" %[^\n]", data);
 
     int dataInt, isItInt, found = 0;
-    if(strcmpi(column, "price") == 0 || strcmpi(column, "rooms") == 0 || strcmpi(column, "bathroom") == 0 || strcmpi(column, "carpark") == 0){
+    if(strcasecmp(column, "price") == 0 || strcasecmp(column, "rooms") == 0 || strcasecmp(column, "bathroom") == 0 || strcasecmp(column, "carpark") == 0){
         dataInt = atoi(data);
         isItInt = 1;
     }
 
     if(isItInt == 1){
         for(int i = 0; i < idx; i++){
-            if(strcmpi(column, "price") == 0 && dataInt == properties[i].price){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            }
-            else if(strcmpi(column, "rooms") == 0 && dataInt == properties[i].rooms){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            }
-            else if(strcmpi(column, "bathroom") == 0 && dataInt == properties[i].bathroom){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            }
-            else if(strcmpi(column, "carpark") == 0 && dataInt == properties[i].carpark){
+            if((strcasecmp(column, "price") == 0 && dataInt == properties[i].price) || (strcasecmp(column, "rooms") == 0 && dataInt == properties[i].rooms) || (strcasecmp(column, "bathroom") == 0 && dataInt == properties[i].bathroom) || (strcasecmp(column, "carpark") == 0 && dataInt == properties[i].carpark)){
                 if(found == 0){
                     printf("Data found. Detail of data:\n");
                     printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
@@ -161,31 +139,7 @@ void case2(Property properties[], int idx){ //Taking care of case 2. Searching d
     }
     else{
         for(int i = 0; i < idx; i++){
-            if(strcmpi(column, "location") == 0 && strcmpi(data, properties[i].location) == 0){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            } 
-            else if(strcmpi(column, "city") == 0 && strcmpi(data, properties[i].city) == 0){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            }
-            else if(strcmpi(column, "type") == 0 && strcmpi(data, properties[i].buildType) == 0){
-                if(found == 0){
-                    printf("Data found. Detail of data:\n");
-                    printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
-                    found = 1;
-                }
-                printf("%-30s %-30s %-10d %-10d %-10d %-10d %-12s %-10s\n", properties[i].location, properties[i].city, properties[i].price, properties[i].rooms, properties[i].bathroom, properties[i].carpark, properties[i].buildType, properties[i].furnish);
-            }
-            else if(strcmpi(column, "furnish") == 0 && strcmpi(data, properties[i].furnish) == 0){
+            if((strcasecmp(column, "location") == 0 && strcasecmp(data, properties[i].location) == 0) || (strcasecmp(column, "city") == 0 && strcasecmp(data, properties[i].city) == 0) || (strcasecmp(column, "type") == 0 && strcasecmp(data, properties[i].buildType) == 0) || (strcasecmp(column, "furnish") == 0 && strcasecmp(data, properties[i].furnish) == 0)){
                 if(found == 0){
                     printf("Data found. Detail of data:\n");
                     printf("%-30s %-30s %-10s %-10s %-10s %-10s %-12s %-10s\n", "Location", "City", "Price", "Rooms", "Bathrooms", "Carpark", "Build Type", "Furnish");
@@ -209,7 +163,7 @@ void case3(Property properties[], int idx){ //Taking care of case 3. Sorting dat
     scanf(" %[^\n]", column);
 
     int found = 0;
-    if(strcmpi(column, "location") == 0 || strcmpi(column, "city") == 0 || strcmpi(column, "price") == 0 || strcmpi(column, "rooms") == 0 || strcmpi(column, "bathroom") == 0 || strcmpi(column, "carpark") == 0 || strcmpi(column, "type") == 0 || strcmpi(column, "furnish") == 0){
+    if(strcasecmp(column, "location") == 0 || strcasecmp(column, "city") == 0 || strcasecmp(column, "price") == 0 || strcasecmp(column, "rooms") == 0 || strcasecmp(column, "bathroom") == 0 || strcasecmp(column, "carpark") == 0 || strcasecmp(column, "type") == 0 || strcasecmp(column, "furnish") == 0){
         found = 1;
         sortColumn = column;
     }
@@ -251,7 +205,7 @@ void case4(Property properties[], int idx){ //Taking care of case 4. Exporting d
     printf("Data successfully written to file %s!\n\n", fileName);
 }
 
-int comp(const void* a, const void* b){ //Comparing function for qsort inside case 3
+int comp(const void* a, const void* b){ //Comparing function for qsort inside case3 function.
     Property* propertyA = (Property*)a;
     Property* propertyB = (Property*)b;
     int result;
@@ -281,7 +235,7 @@ int comp(const void* a, const void* b){ //Comparing function for qsort inside ca
         result = strcmp(propertyA->furnish, propertyB->furnish);
     }
 
-    if(strcmp(sortOrder, "desc") == 0) {
+    if(strcasecmp(sortOrder, "desc") == 0) {
         result = -result;
     }
 

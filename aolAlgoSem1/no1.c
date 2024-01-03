@@ -25,7 +25,8 @@ int main(){
         if(isalpha(text[i])){
             if(isupper(text[i])){
                 text[i] = tolower(text[i]);
-            }else{
+            }
+            else{
                 text[i] = toupper(text[i]);
             }
         }
