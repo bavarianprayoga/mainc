@@ -32,18 +32,6 @@ int urut(int arr[], int start, int end){
     int pivot = arr[end]; //ambil pivot terakhir sebagai patokan
     int i = start - 1; //indeks untuk elemen yg lebih kecil dari pivot
 
-    /*
-    kalo mau pivot di tengah:
-    int pivotIdx = (start + end) / 2;
-    int pivot = arr[pivotIdx];
-
-    int swap = arr[pivotIdx];
-    arr[pivotIdx] = arr[end];
-    arr[end] = swap;
-
-    taro sebelum int i
-
-    */
 
     for(int j = start; j <= end - 1; j++){
         if(arr[j] < pivot){
@@ -59,6 +47,19 @@ int urut(int arr[], int start, int end){
     arr[end] = swap; //buat nuker pivot yang ada di akhir array ke tempatnya
     
     return i;
+
+    /*
+    kalo mau pivot di tengah:
+    int pivotIdx = (start + end) / 2;
+    int pivot = arr[pivotIdx];
+
+    int swap = arr[pivotIdx];
+    arr[pivotIdx] = arr[end];
+    arr[end] = swap;
+
+    taro sebelum int i
+
+    */
 
     /* 
     kalo mau pivotnya median-of-three (buat gaya)
