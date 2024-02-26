@@ -1,24 +1,49 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct{
+    char name[50];
+    int age;
+} student;
+
 int main(){
 
-    int t;
+    student student1;
 
-    FILE *file = fopen("w.txt", "r");
+    printf("Enter name: ");
+    scanf("%s", student1.name);
+    printf("Enter age: ");
+    scanf("%d", &student1.age);
 
-    if(file == NULL) perror("errawrrr");
+    printf("Name: %s\n", student1.name);
+    printf("Age: %d\n", student1.age);
+        student student2;
+        strcpy(student2.name, "John");
+        student2.age = 20;
 
-    fscanf(file, " %d", &t);
+        printf("Name: %s\n", student2.name);
+        printf("Age: %d\n", student2.age);
 
-    char name[t][100];
-    int age[t];
+        student student3;
+        strcpy(student3.name, "Jane");
+        student3.age = 22;
 
-    for(int i = 0; i < t; i++){
-        fscanf(file, " %[^-]-%d", name[i], &age[i]);
-    }
+        printf("Name: %s\n", student3.name);
+        printf("Age: %d\n", student3.age);
 
-    fclose(file);
+        student student4;
+        strcpy(student4.name, "Mike");
+        student4.age = 19;
 
-    return 0;
+        printf("Name: %s\n", student4.name);
+        printf("Age: %d\n", student4.age);
+
+        student student5;
+        strcpy(student5.name, "Emily");
+        student5.age = 21;
+
+        printf("Name: %s\n", student5.name);
+        printf("Age: %d\n", student5.age);
+
+        return 0;
 }
