@@ -1,0 +1,1 @@
+proses menjadi penguasa dunia
