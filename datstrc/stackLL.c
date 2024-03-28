@@ -57,7 +57,6 @@ int main(){
 
     struct Stack *stack = CreateStack();
 
-
     for(int i = 0; i < 5; i++){
         printf("Pushed %d\n", Push(stack, i + 1));
     }
