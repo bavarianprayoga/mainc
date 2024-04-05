@@ -105,6 +105,7 @@ void pop(Node **head, int diamondType){
                     // if curr's next is not null, set curr's next's prev to null
                     // because curr is the head node, so there is no previous node
                     curr->next->prev = NULL;
+                    // also same as (*head)->prev = NULL; (because curr->next is the new head node)
                 }
             }
             else{

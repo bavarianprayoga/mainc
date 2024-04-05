@@ -27,9 +27,12 @@ Node *createNode(int id, int dueDate, char desc[100], char employee[100], int st
 }
 
 Node *insertSorted(Node *head, Node *newNode){
-    if(head == NULL || newNode->dueDate < head->dueDate){ //check if head is NULL or newNode's dueDate is smaller than head's. If true, insert at head
-        newNode->next = head; //newNode's next is head, if head is NULL, newNode's next is NULL
-        if(head != NULL){ //if head is not NULL, head's prev is newNode. This means newNode is now the head
+    if(head == NULL || newNode->dueDate < head->dueDate){ 
+        //check if head is NULL or newNode's dueDate is smaller than head's. If true, insert at head
+        newNode->next = head; 
+        //newNode's next is head, if head is NULL, newNode's next is NULL
+        if(head != NULL){ 
+            //if head is not NULL, head's prev is newNode. This means newNode is now the head
             head->prev = newNode;
         }
         return newNode;
@@ -78,6 +81,32 @@ void printCompletedTasks(Node *head){
         curr = curr->next;
     }
     free(curr);
+}
+
+void popCompleted(Node **head){
+    // pop explanation in latquizdatstrc3.c
+    Node *curr = *head;
+    Node *temp;
+
+    while(curr != NULL){
+        if(curr->status == 1){
+            if(curr->prev == NULL){
+                *head = curr->next;
+            }
+            else{
+                curr->prev->next = curr->next;
+                if(curr->next != NULL){
+                    curr->next->prev = curr->prev;
+                }
+            }
+                temp = curr;
+                curr = curr->next;
+                free(temp);
+        }
+        else{
+            curr = curr->next;
+        }
+    }
 }
 
 int main(){
@@ -134,6 +163,7 @@ int main(){
         }
     }
     printCompletedTasks(head);
+    popCompleted(&head);
     printPendingTasks(head);
 
     return 0;
