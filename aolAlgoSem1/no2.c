@@ -41,7 +41,7 @@ int main(){
     int idx = 0;
 
     char buffer[100];
-    fgets(buffer, sizeof(buffer), file);
+    fgets(buffer, sizeof(buffer), file); //skip first line
 
     while(fscanf(file, "%[^,],%[^,],%d,%d,%d,%d,%[^,],%[^\n]\n", properties[idx].location, properties[idx].city, &properties[idx].price, &properties[idx].rooms, &properties[idx].bathroom, &properties[idx].carpark, properties[idx].buildType, properties[idx].furnish) != EOF){
         idx++;
