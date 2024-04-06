@@ -23,6 +23,7 @@ void enqueue(Node **head, int id){
     }
     Node *tail = *head;
     while(tail->next != NULL){
+        // iterate to the last node
         tail = tail->next;
     }
     tail->next = newNode;
@@ -70,6 +71,7 @@ int main(){
     scanf(" %d", &cancel);
     
     while(onlineHead != NULL || walkInHead != NULL){
+        // merge the two queues
         if(onlineHead != NULL){
             Node *curr = dequeue(&onlineHead);
             enqueue(&finalHead, curr->id);
