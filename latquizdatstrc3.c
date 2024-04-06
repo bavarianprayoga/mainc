@@ -60,6 +60,9 @@ Node *insertSorted(Node *head, Node *newNode){
 }
 
 void printStock(Node *head, int diamondType, char *diamondName){
+    // passing the pointer of diamondName so the function knows that diamondName is a pointer to a string and not just a char
+    // why? you're actually passing a pointer to the first character of the string. This allows the function to access the entire string, 
+    // because it can use the pointer to traverse the array of characters.
     Node *curr = head;
     int totalAmount = 0;
     // iterate through the list to calculate the total amount of the diamondType
