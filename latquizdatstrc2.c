@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// TODO bikin pop/remove buat completed task
-
 typedef struct Node{
     int id;
     int dueDate;

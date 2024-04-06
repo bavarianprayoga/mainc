@@ -15,7 +15,7 @@ Node *createNode(int id){
     return newNode;
 }
 
-void enqueue(Node **head, int id){
+void enqueue(Node **head, int id){ // note at the end
     Node *newNode = createNode(id);
     if(*head == NULL){
         *head = newNode;
@@ -30,12 +30,14 @@ void enqueue(Node **head, int id){
     newNode->prev = tail;
 }
 
-Node *dequeue(Node **head){
+Node *dequeue(Node **head){ // note at the end
     if(*head == NULL){
         return NULL;
     }
     Node *temp = *head;
+    // bikin pointer baru buat nampung head yang mau dihapus
     if((*head)->next == NULL){
+        // if there's only one node
         *head = NULL;
     }
     else{
@@ -129,3 +131,17 @@ int main(){
 
     return 0;
 }
+
+// why **head in enqueue and dequeue?
+
+/*In C, variables are passed to functions by value, not by reference. This means that if you pass a variable to a function, 
+the function creates a local copy of that variable, and any changes made to the variable inside the function do not affect the original variable.
+
+In your code, head is a pointer to the first node in your linked list. If you want to modify the linked list in your enqueue or dequeue function 
+(for example, to add a new node or remove the first node), you need to be able to change head. If you passed head directly to your function, 
+the function would get a copy of head, and any changes made to head inside the function would not affect the original linked list.
+
+To get around this, you can pass a pointer to head to your function. This is what Node **head is: a pointer to a pointer to a Node. 
+When you pass &head (the address of head) to your function, the function can then dereference head (with *head) to get the actual head pointer and modify it. 
+This allows the function to make changes to the original linked list.*/
+
