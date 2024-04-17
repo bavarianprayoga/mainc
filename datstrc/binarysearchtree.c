@@ -21,21 +21,21 @@ Traversal types:
 
 */
 
-struct Node{
+typedef struct Node{
     int data;
     struct Node *left;
     struct Node *right;
-};
+} Node;
 
-struct Node *newNode(int data){
-    struct Node *temp = (struct Node *)malloc(sizeof(struct Node));
+Node *newNode(int data){
+    Node *temp = (Node *)malloc(sizeof(Node));
     temp->data = data;
     temp->left = NULL;
     temp->right = NULL;
     return temp;
 }
 
-struct Node *insertNode(struct Node *root, int data){
+Node *insertNode(struct Node *root, int data){
     if(root == NULL){
         return newNode(data); //Checks if the subtree is empty (in this case if we reaches a leaf node, we insert the new node there.)
     }
@@ -50,7 +50,7 @@ struct Node *insertNode(struct Node *root, int data){
     //This function will iterate through the tree until it finds the correct position to insert the new node.
 }
 
-struct Node *search(struct Node *root, int data){
+Node *search(Node *root, int data){
     if(root == NULL || root->data == data){ // if the root is NULL or the root's data is the data we're looking for, return the root
         return root;
     }
@@ -60,15 +60,15 @@ struct Node *search(struct Node *root, int data){
     return search(root->left, data);
 }
 
-struct Node *minValueNode(struct Node *node){ //Find the minimum value node in the tree
-    struct Node *current = node;
+Node *minValueNode(Node *node){ //Find the minimum value node in the tree
+    Node *current = node;
     while(current && current->left != NULL){ // the minimum value node is the leftmost node in the tree
         current = current->left;
     }
     return current;
 }
 
-void inorder(struct Node *root){
+void inorder(Node *root){
     if(root == NULL){
         return;
     }
@@ -77,7 +77,7 @@ void inorder(struct Node *root){
     inorder(root->right);
 }
 
-struct Node *deleteNode(struct Node *root, int data){
+Node *deleteNode(Node *root, int data){
     if(root == NULL){ // if the tree is empty, return NULL
         return root;
     }
@@ -89,17 +89,17 @@ struct Node *deleteNode(struct Node *root, int data){
     }
     else{
         if(root->left == NULL){ //The node has only one child (right child)
-            struct Node *temp = root->right;
+            Node *temp = root->right;
             free(root);
             return temp;
         }
         else if(root->right == NULL){ //The node has only one child (left child)
-            struct Node *temp = root->left;
+            Node *temp = root->left;
             free(root);
             return temp;
         }
         //The node has two children
-        struct Node *temp = minValueNode(root->right);
+        Node *temp = minValueNode(root->right);
         // This line finds the node with the minimum value in the right subtree of the node to be deleted. 
         // This is done because when a node in a binary search tree is deleted, 
         // it can be replaced by either the largest node in its left subtree or the smallest node in its right subtree to maintain the binary search tree property. 
@@ -114,7 +114,7 @@ struct Node *deleteNode(struct Node *root, int data){
 
 int main(){
 
-    struct Node *root = NULL;
+    Node *root = NULL;
     root = insertNode(root, 50);
     insertNode(root, 30);
     insertNode(root, 20);
