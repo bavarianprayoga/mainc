@@ -110,7 +110,26 @@ Node *deleteNode(Node *root, int data){
     return root;
 }
 
+int height(Node *root){
+    if(root == NULL){
+        return -1;
+    }
+    else{
+        int left = height(root->left);
+        int right = height(root->right);
 
+        return (left > right ? left : right) + 1;
+    }
+}
+
+int totalNode(Node *root){
+    if(root == NULL){
+        return 0;
+    }
+    else{
+        return 1 + totalNode(root->left) + totalNode(root->right);
+    }
+}
 
 int main(){
 
@@ -129,8 +148,11 @@ int main(){
 
     printf("Inorder traversal:\n");
     inorder(root);
+    printf("\n\n");
+    printf("Height of the tree: %d\n", height(root));
+    printf("Total number of nodes: %d\n", totalNode(root));
 
-    printf("\n\nAfter deleting 20\n");
+    printf("\nAfter deleting 20\n");
     root = deleteNode(root, 20);
     inorder(root);
 
