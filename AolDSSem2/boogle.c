@@ -17,7 +17,8 @@ void newSlang(); // Function for adding a new slang word to the Trie
 void searchSlang(); // Function for searching slangs inputted beforehand
 void prefixSearch(); // Function to print all the words in the Trie that starts with a given prefix
 void viewAllWords(); // Function to print all words in the Trie
-void printPrefixes(Trie *curr, char *prefix); // Helper function for prefixSearch
+void printPrefixes(Trie *curr, char *prefix, int *count); // Helper function for prefixSearch
+void pressEnter(); // Funcrion to prompt user to press enter to continue
 
 int main(){ // Main function
 
@@ -27,13 +28,13 @@ int main(){ // Main function
 
     do{
         // Display the menu
-        puts("===========================================");
-        puts("1. Release a new slang word");
-        puts("2. Search a slang word");
-        puts("3. View all slang words starting with a certain prefix word");
-        puts("4. View all slang words");
-        puts("5. Exit");
-        puts("===========================================");
+        printf("===========================================\n");
+        printf("1. Release a new slang word\n");
+        printf("2. Search a slang word\n");
+        printf("3. View all slang words starting with a certain prefix word\n");
+        printf("4. View all slang words\n");
+        printf("5. Exit\n");
+        printf("===========================================\n");
 
         do{
             printf("Your choice: ");
@@ -43,22 +44,26 @@ int main(){ // Main function
         switch(menuSelection){
         case 1:
             newSlang(); // Call newSlang function
+            pressEnter();
             break;
         case 2:
             searchSlang();
+            pressEnter();
             break;
         case 3:
             prefixSearch();
+            pressEnter();
             break;
         case 4:
             viewAllWords();
+            pressEnter();
             break;
         case 5:
-            puts("Thank you!"); 
-            puts("Exiting program...");
+            printf("Thank you!\n"); 
+            printf("Exiting program...\n");
             break;
         default:
-            puts("Invalid choice! Please enter a number between 1 and 5.\n");
+            printf("Invalid choice! Please enter a number between 1 and 5.\n\n");
             break;
         }
 
@@ -108,7 +113,7 @@ void newSlang(){
 
     strcpy(curr->desc, desc); //update or set the description for the new slang.
     curr->isItWord = 1; //set the boolean to true (1) because we got a new slang.
-    printf("\n\n");
+    printf("\n");
 }
 
 void searchSlang(){
@@ -129,8 +134,9 @@ void searchSlang(){
     Trie *curr = root;
     for(int i = 0; i < strlen(slang); i++){
         int idx = slang[i] - 'a'; // subtract with a to set the index from 0 to 26 (ex. b - a is 98 - 97 in ascii, and it will fill index 1)
-        if (!curr->child[idx]){ //if current's child does not exists, then the search keyword is invalid.
-            puts("Slang does not exists.");
+        if(!curr->child[idx]){ //if current's child does not exists, then the search keyword is invalid.
+            printf("Slang does not exists.\n");
+            printf("\n");
             return;
         }
         curr = curr->child[idx]; //if the current child exists, check the child's child. do that as many as the length of the keyword.
@@ -138,13 +144,13 @@ void searchSlang(){
 
     // If the slang exists, display it along with the description
     if(curr != NULL && curr->isItWord){
-        puts("Slang found!");
+        printf("Slang found!\n");
         printf("Slang word : %s\nDescription: %s\n", slang, curr->desc);
     }
     else{
-        puts("Slang does not exists.\n");
+        printf("Slang does not exists.\n");
     }
-    printf("\n\n");
+    printf("\n");
 }
 
 void prefixSearch(){
@@ -162,14 +168,16 @@ void prefixSearch(){
     for(int i = 0; i < strlen(prefix); i++){
         int idx = prefix[i] - 'a'; // subtract with a to set the index from 0 to 26 (ex. b - a is 98 - 97 in ascii, and it will fill index 1)
         if (!curr->child[idx]){ //if current's child does not exists, then the search keyword is invalid.
-            puts("No words found with this prefix.");
+            printf("No words found with this prefix.\n\n");
             return;
         }
         curr = curr->child[idx]; //if the current child exists, check the child's child. do that as many as the length of the keyword.
     }
 
-    printPrefixes(curr, prefix);
-    printf("\n\n");
+    int count = 0;
+    printf("Here are the slangs that start with \"%s\":\n", prefix);
+    printPrefixes(curr, prefix, &count);
+    printf("\n");
 } 
 
 void viewAllWords(){
@@ -182,17 +190,20 @@ void viewAllWords(){
     }
 
     if(isEmpty == 1){
-        puts("No words in the dictionary.\n");
+        printf("No words in the dictionary.\n\n");
     }
     else{
         char prefix[100] = "";
-        printPrefixes(root, prefix);
+        int count = 0;
+        printf("List of all slang words in the dictionary:\n");
+        printPrefixes(root, prefix, &count);
     }
+    printf("\n");
 }
 
-void printPrefixes(Trie *curr, char *prefix){
+void printPrefixes(Trie *curr, char *prefix, int *count){
     if(curr->isItWord == 1){ // If the current node marks the end of a valid word, print it.
-        printf("%s\n", prefix);
+        printf("%d. %s\n", ++(*count), prefix);
     }
     for(int i = 0; i < 26; i++){ //Iterate over each child of the current node
         if(curr->child[i] != NULL){ // Check if current node has a child corresponding to the i-th letter of the alphabet
@@ -201,7 +212,14 @@ void printPrefixes(Trie *curr, char *prefix){
             int len = strlen(newPrefix);
             newPrefix[len] = i + 'a'; // Append the i-th letter of the alphabet to newPrefix
             newPrefix[len + 1] = '\0'; // Add a null character at the end to mark the end of the string
-            printPrefixes(curr->child[i], newPrefix); // Recursively call the printWords function for the child node
+            printPrefixes(curr->child[i], newPrefix, count); // Recursively call the printWords function for the child node
         }
     }
+}
+
+void pressEnter(){
+    printf("Press enter to continue...");
+    getchar();
+    getchar();
+    printf("\n");
 }
