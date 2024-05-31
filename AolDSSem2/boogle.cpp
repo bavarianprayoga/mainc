@@ -18,6 +18,7 @@ void searchSlang(); // Function for searching slangs inputted beforehand
 void prefixSearch(); // Function to print all the words in the Trie that starts with a given prefix
 void viewAllWords(); // Function to print all words in the Trie
 void printPrefixes(Trie *curr, char *prefix, int *count); // Helper function for prefixSearch
+void freeTrie(Trie *node); // Function to free trie memory
 void pressEnter(); // Funcrion to prompt user to press enter to continue
 
 int main(){ // Main function
@@ -44,23 +45,26 @@ int main(){ // Main function
         switch(menuSelection){
         case 1:
             newSlang(); // Call newSlang function
-            pressEnter();
-            break;
+            pressEnter(); // Call pressEnter Function
+            break; // Exit the switch case
         case 2:
-            searchSlang();
+            searchSlang(); // Call searchSlang function
             pressEnter();
             break;
         case 3:
-            prefixSearch();
+            prefixSearch(); // Call prefixSearch function
             pressEnter();
             break;
         case 4:
-            viewAllWords();
+            viewAllWords(); // Call viewAllWords function
             pressEnter();
             break;
         case 5:
             printf("Thank you!\n"); 
             printf("Exiting program...\n");
+            if(root != NULL){
+                freeTrie(root);
+            }
             break;
         default:
             printf("Invalid choice! Please enter a number between 1 and 5.\n\n");
@@ -68,7 +72,6 @@ int main(){ // Main function
         }
 
     } while(menuSelection != 5); // Continue displaying menu until user chooses to exit
-
 }
 
 Trie *newNode(char chr){
@@ -215,6 +218,15 @@ void printPrefixes(Trie *curr, char *prefix, int *count){
             printPrefixes(curr->child[i], newPrefix, count); // Recursively call the printWords function for the child node
         }
     }
+}
+
+void freeTrie(Trie *node){
+    for (int i = 0; i < 26; i++){
+        if (node->child[i] != NULL){
+            freeTrie(node->child[i]);
+        }
+    }
+    free(node);
 }
 
 void pressEnter(){
