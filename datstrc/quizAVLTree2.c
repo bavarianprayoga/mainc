@@ -152,13 +152,13 @@ TreeNode *deleteNode(TreeNode* root, int treeKey){
         return rightRotate(root);
     }
 
+    if(balanceFactor < -1 && getBalanceFactor(root->right) <= 0){
+        return leftRotate(root);
+    }
+
     if(balanceFactor > 1 && getBalanceFactor(root->left) < 0){
         root->left = leftRotate(root->left);
         return rightRotate(root);
-    }
-
-    if(balanceFactor < -1 && getBalanceFactor(root->right) <= 0){
-        return leftRotate(root);
     }
 
     if(balanceFactor < -1 && getBalanceFactor(root->right) > 0){
