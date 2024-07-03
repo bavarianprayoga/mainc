@@ -4,17 +4,15 @@
 
 typedef struct TreeNode{
     int key;
-    char virtue[20];
     struct TreeNode* left;
     struct TreeNode* right;
     int height;
 } TreeNode;
 
-TreeNode *createNode(int treeKey, char virtueType[20]){
+TreeNode *createNode(int treeKey){
     TreeNode *newNode = (TreeNode*)malloc(sizeof(TreeNode));
     if(newNode != NULL){
         newNode->key = treeKey;
-        strcpy(newNode->virtue, virtueType);
         newNode->left = NULL;
         newNode->right = NULL;
         newNode->height = 1;
@@ -70,32 +68,23 @@ TreeNode *minValueNode(TreeNode* node){
     return current;
 }
 
-TreeNode *insertNode(TreeNode* node, int treeKey, char virtueType[20], int* powerCounter, int* wisdomCounter, int* courageCounter){
+TreeNode *insertNode(TreeNode* node, int treeKey){
     if(node == NULL){
-        TreeNode* newNode = createNode(treeKey, virtueType);
-        if(strcasecmp(virtueType, "Power") == 0){
-            (*powerCounter)++;
-        }
-        else if(strcasecmp(virtueType, "Courage") == 0){
-            (*courageCounter)++;
-        }
-        else if(strcasecmp(virtueType, "Wisdom") == 0){
-            (*wisdomCounter)++;
-        }
+        TreeNode* newNode = createNode(treeKey);
         return newNode;
     }
 
     if(treeKey < node->key){
-        node->left = insertNode(node->left, treeKey, virtueType, powerCounter, wisdomCounter, courageCounter);
+        node->left = insertNode(node->left, treeKey);
     }
     else if(treeKey > node->key){
-        node->right = insertNode(node->right, treeKey, virtueType, powerCounter, wisdomCounter, courageCounter);
+        node->right = insertNode(node->right, treeKey);
     }
     else{
         return node;
     }
 
-    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+    node->height = max(getHeight(node->left), getHeight(node->right)) + 1;
 
     int balanceFactor = getBalanceFactor(node);
 
@@ -120,32 +109,22 @@ TreeNode *insertNode(TreeNode* node, int treeKey, char virtueType[20], int* powe
     return node;
 }
 
-TreeNode *deleteNode(TreeNode* root, int treeKey, int* powerCounter, int* wisdomCounter, int* courageCounter){
+TreeNode *deleteNode(TreeNode* root, int treeKey){
     if(root == NULL){
         return root;
     }
 
     if(treeKey < root->key){
-        root->left = deleteNode(root->left, treeKey, powerCounter, wisdomCounter, courageCounter);
+        root->left = deleteNode(root->left, treeKey);
     }
     else if(treeKey > root->key){
-        root->right = deleteNode(root->right, treeKey, powerCounter, wisdomCounter, courageCounter);
+        root->right = deleteNode(root->right, treeKey);
     }
     else{
-        if(strcasecmp(root->virtue, "Power") == 0){
-            (*powerCounter)--;
-        }
-        else if(strcasecmp(root->virtue, "Courage") == 0){
-            (*courageCounter)--;
-        }
-        else if(strcasecmp(root->virtue, "Wisdom") == 0){
-            (*wisdomCounter)--;
-        }
-
         if((root->left == NULL) || (root->right == NULL)){
             TreeNode* temp = root->left ? root->left : root->right;
 
-            if(temp == NULL) {
+            if(temp == NULL){
                 temp = root;
                 root = NULL;
             }
@@ -157,8 +136,7 @@ TreeNode *deleteNode(TreeNode* root, int treeKey, int* powerCounter, int* wisdom
         else{
             TreeNode* temp = minValueNode(root->right);
             root->key = temp->key;
-            strcpy(root->virtue, temp->virtue);
-            root->right = deleteNode(root->right, temp->key, powerCounter, wisdomCounter, courageCounter);
+            root->right = deleteNode(root->right, temp->key);
         }
     }
 
@@ -166,7 +144,7 @@ TreeNode *deleteNode(TreeNode* root, int treeKey, int* powerCounter, int* wisdom
         return root;
     }
 
-    root->height = 1 + max(getHeight(root->left), getHeight(root->right));
+    root->height = max(getHeight(root->left), getHeight(root->right)) + 1;
 
     int balanceFactor = getBalanceFactor(root);
 
@@ -210,37 +188,49 @@ int countNodes(TreeNode* root){
     return 1 + countNodes(root->left) + countNodes(root->right);
 }
 
+TreeNode *lowerBound(TreeNode* root, int treeKey){ // smallest key greater than treeKey
+    TreeNode* result = NULL;
+    while(root != NULL){
+        if(root->key > treeKey){
+            result = root;
+            root = root->left;
+        }
+        else{
+            root = root->right;
+        }
+    }
+    return result;
+}
+
 int main(){
 
     TreeNode *root = NULL;
-    int powerCounter = 0;
-    int courageCounter = 0;
-    int wisdomCounter = 0;
     int t;
 
     scanf("%d", &t);
 
-    for(int i = 0; i < t; i++){
-        int actionType;
+    for(int i = 0; i < t * 2; i++){
+        char actionType;
         int treeKey;
-        char virtueType[20];
-        scanf("%d", &actionType);
+        scanf("%c", &actionType);
 
-        switch(actionType){
-            case 1:
-                scanf("%d %s", &treeKey, virtueType);
-                root = insertNode(root, treeKey, virtueType, &powerCounter, &wisdomCounter, &courageCounter);
-                printf("%d %d %d\n", powerCounter, wisdomCounter, courageCounter);
-                break;
-            case 2:
-                scanf("%d", &treeKey);
-                root = deleteNode(root, treeKey, &powerCounter, &wisdomCounter, &courageCounter);
-                printf("%d\n", countNodes(root));
-                break;
-            case 3:
-                if (powerCounter > 0 && wisdomCounter > 0 && courageCounter > 0)
-                    printf("May your courage to seek wisdom grant you power!\n");
-                break;
+        if(actionType == 'i' || actionType == 'I'){
+            scanf("%d", &treeKey);
+            root = insertNode(root, treeKey);
+        }
+        else if(actionType == 'd' || actionType == 'D'){
+            scanf("%d", &treeKey);
+            root = deleteNode(root, treeKey);
+        }
+        else if(actionType == 'l' || actionType == 'L'){
+            scanf("%d", &treeKey);
+            TreeNode* result = lowerBound(root, treeKey);
+            if(result != NULL){
+                printf("%d\n", result->key);
+            }
+            else{
+                printf("-1\n");
+            }
         }
         
     }
